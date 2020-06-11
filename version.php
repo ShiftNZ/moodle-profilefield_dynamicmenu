@@ -22,11 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2017021201;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2015011000;        // Requires this Moodle version.
+$plugin->version = 2020061201; // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires = 2015011000; // Requires this Moodle version.
 $plugin->component = 'profilefield_dynamicmenu'; // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release   = 'dynamicmenu_v1.1';
+$plugin->release = 'dynamicmenu_v1.1';

@@ -22,7 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 /**
  * Class profile_field_dynamicmenu
  *
@@ -47,14 +46,17 @@ class profile_field_dynamicmenu extends profile_field_base {
      *
      * @param int $fieldid
      * @param int $userid
+     * @param object $fielddata optional data for the field object plus additional fields 'hasuserdata', 'data' and '$
+     *    with user data. (If $fielddata->hasuserdata is empty, user data is not available and we should use default $
+     *    If this parameter is passed, constructor will not call load_data() at all.
      */
-    public function __construct($fieldid = 0, $userid = 0) {
+    public function __construct($fieldid = 0, $userid = 0, $fielddata = null) {
         // First call parent constructor.
-        parent::__construct($fieldid, $userid);
+        parent::__construct($fieldid, $userid, $fielddata);
         // Only if we actually need data.
         if ($fieldid !== 0 && $userid !== 0) {
-            $mykey = $fieldid.','.$userid; // It will always work because they are number, so no chance of ambiguity.
-            if (array_key_exists($mykey , self::$acalls)) {
+            $mykey = $fieldid . ',' . $userid; // It will always work because they are number, so no chance of ambiguity.
+            if (array_key_exists($mykey, self::$acalls)) {
                 $rs = self::$acalls[$mykey];
             } else {
                 $sql = $this->field->param1;
@@ -64,10 +66,10 @@ class profile_field_dynamicmenu extends profile_field_base {
             }
             $this->options = array();
             if ($this->field->required) {
-                $this->options[''] = get_string('choose').'...';
+                $this->options[''] = get_string('choose') . '...';
             }
             foreach ($rs as $key => $option) {
-                $this->options[format_string($key)] = format_string($option->data);// Multilang formatting.
+                $this->options[format_string($key)] = format_string($option->data); // Multilang formatting.
             }
 
             // Set the data key.
@@ -86,7 +88,7 @@ class profile_field_dynamicmenu extends profile_field_base {
      *
      * @deprecated since Moodle 3.1
      */
-    public function profile_field_dynamicmenu($fieldid=0, $userid=0) {
+    public function profile_field_dynamicmenu($fieldid = 0, $userid = 0) {
         self::__construct($fieldid, $userid);
     }
 
@@ -97,7 +99,7 @@ class profile_field_dynamicmenu extends profile_field_base {
      */
     public function edit_field_add($mform) {
         $mform->addElement('select', $this->inputname, format_string($this->field->name), $this->options);
-        $mform->setType( $this->inputname, PARAM_TEXT);
+        $mform->setType($this->inputname, PARAM_TEXT);
     }
 
     /**
